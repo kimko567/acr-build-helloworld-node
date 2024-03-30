@@ -1,0 +1,10 @@
+version: v1.1.0
+steps:
+- build: -t {{ .Run.Registry }}/hello-world:{{ .Run.ID }} -f Dockerfile .
+- cmd: -t {{ .Run.Registry }}/hello-world:{{ .Run.ID }}
+  id: test
+  deatch: true
+  ports: ["8080:80"]
+- cmd: docker stop test
+- push:
+  - {{ .Run.Registry }}/hello-world:{{ .Run.ID }}
